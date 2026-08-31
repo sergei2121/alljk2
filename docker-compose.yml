@@ -1,0 +1,12 @@
+services:
+  laguna:
+    build: .
+    container_name: laguna
+    restart: unless-stopped
+    ports:
+      # внешний порт : внутренний порт nginx
+      - "8090:80"
+    volumes:
+      # Положите сюда data.json — сайт подхватит его при первом запуске.
+      # Формат: { "title": "...", "sheets": [{ "name", "columns": [...], "rows": [[...]] }] }
+      - ./data:/usr/share/nginx/html/data:ro
