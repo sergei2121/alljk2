@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- semantic tokens (flip with .dark) ---------- */
+:root {
+  --bg: #eaf2fd;
+  --panel: #ffffff;
+  --panel2: #f1f7ff;
+  --panel3: #e2edfb;
+  --line: rgba(23, 62, 118, 0.14);
+  --line2: rgba(23, 62, 118, 0.26);
+  --ink: #0b2246;
+  --ink2: #43628f;
+  --ink3: #7d94b6;
+  --accent: #1565d8;
+  --accent-soft: rgba(21, 101, 216, 0.1);
+  --onaccent: #f3f8ff;
+  --ok: #0e9f6e;
+  --ok-bg: rgba(14, 159, 110, 0.12);
+  --warn: #c07f06;
+  --warn-bg: rgba(192, 127, 6, 0.14);
+  --bad: #d33a4e;
+  --bad-bg: rgba(211, 58, 78, 0.12);
+  --glow1: rgba(72, 140, 240, 0.16);
+  --glow2: rgba(0, 178, 214, 0.12);
+  --grid-dot: rgba(23, 62, 118, 0.12);
+  --shadow: 0 18px 50px -18px rgba(11, 42, 90, 0.25);
+}
+.dark {
+  --bg: #071527;
+  --panel: #0c2038;
+  --panel2: #11294a;
+  --panel3: #17335c;
+  --line: rgba(128, 178, 255, 0.13);
+  --line2: rgba(128, 178, 255, 0.26);
+  --ink: #e9f2ff;
+  --ink2: #9fbadd;
+  --ink3: #5f7ca3;
+  --accent: #4ca6ff;
+  --accent-soft: rgba(76, 166, 255, 0.13);
+  --onaccent: #061527;
+  --ok: #3edc9b;
+  --ok-bg: rgba(62, 220, 155, 0.12);
+  --warn: #ffc65c;
+  --warn-bg: rgba(255, 198, 92, 0.12);
+  --bad: #ff7a8a;
+  --bad-bg: rgba(255, 122, 138, 0.12);
+  --glow1: rgba(37, 118, 235, 0.3);
+  --glow2: rgba(34, 211, 238, 0.14);
+  --grid-dot: rgba(140, 190, 255, 0.09);
+  --shadow: 0 22px 60px -18px rgba(2, 10, 24, 0.65);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel2: var(--panel2);
+  --color-panel3: var(--panel3);
+  --color-line: var(--line);
+  --color-line2: var(--line2);
+  --color-ink: var(--ink);
+  --color-ink2: var(--ink2);
+  --color-ink3: var(--ink3);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-onaccent: var(--onaccent);
+  --color-ok: var(--ok);
+  --color-ok-bg: var(--ok-bg);
+  --color-warn: var(--warn);
+  --color-warn-bg: var(--warn-bg);
+  --color-bad: var(--bad);
+  --color-bad-bg: var(--bad-bg);
+  --shadow-lift: var(--shadow);
+}
+
+@theme {
+  --font-display: "Unbounded", "Golos Text", sans-serif;
+  --font-sans: "Golos Text", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  --color-azure-200: #c6e6ff;
+  --color-azure-300: #9ed4ff;
+  --color-azure-400: #63b3ff;
+  --color-azure-500: #3b97ff;
+  --color-azure-600: #1e7bec;
+  --color-azure-700: #1461c1;
+  --color-navy-800: #0f2544;
+  --color-navy-900: #0a1b33;
+  --color-navy-950: #061224;
+}
+
+/* ---------- base ---------- */
+html, body, #root { height: 100%; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+::selection { background: var(--accent); color: var(--onaccent); }
+
+* { scrollbar-width: thin; scrollbar-color: var(--line2) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--line2); border-radius: 8px; border: 3px solid transparent; background-clip: content-box; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+mark {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 3px;
+  padding: 0 1px;
+  font-weight: 600;
+}
+.tnum { font-variant-numeric: tabular-nums lining-nums; }
+
+/* ---------- ambient background ---------- */
+.bg-stage { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.bg-stage::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 30%, transparent 78%);
+}
+.glow { position: absolute; border-radius: 50%; filter: blur(70px); will-change: transform; }
+.glow-a {
+  width: 60vw; height: 60vw; left: -18vw; top: -24vw;
+  background: radial-gradient(circle, var(--glow1), transparent 65%);
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+.glow-b {
+  width: 52vw; height: 52vw; right: -16vw; bottom: -22vw;
+  background: radial-gradient(circle, var(--glow2), transparent 62%);
+  animation: drift-b 32s ease-in-out infinite alternate;
+}
+.wave-line { position: absolute; left: 0; right: 0; bottom: -6px; opacity: 0.5; }
+.wave-line path { stroke: var(--line2); }
+.wave-line .w2 { animation: wave-slide 14s linear infinite; }
+.wave-line .w1 { animation: wave-slide 22s linear infinite reverse; opacity: 0.6; }
+
+/* ---------- motion ---------- */
+@keyframes drift-a { from { transform: translate3d(-3%, -2%, 0) scale(1); } to { transform: translate3d(5%, 4%, 0) scale(1.15); } }
+@keyframes drift-b { from { transform: translate3d(3%, 2%, 0) scale(1.08); } to { transform: translate3d(-4%, -3%, 0) scale(1); } }
+@keyframes wave-slide { from { transform: translateX(0); } to { transform: translateX(-160px); } }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes pop { from { opacity: 0; transform: translateY(6px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scan { 0% { top: -8%; } 100% { top: 104%; } }
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(-0.4deg); } 50% { transform: translateY(-9px) rotate(0.4deg); } }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.72); } }
+
+.anim-rise { animation: rise 0.45s cubic-bezier(0.22, 0.9, 0.3, 1) both; }
+.anim-pop { animation: pop 0.22s cubic-bezier(0.22, 0.9, 0.3, 1) both; }
+.anim-fade { animation: fade 0.25s ease both; }
+.anim-bob { animation: bob 7s ease-in-out infinite; }
+.scanline {
+  position: absolute; left: 0; right: 0; height: 34px;
+  background: linear-gradient(to bottom, transparent, var(--accent-soft), transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  animation: scan 4.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.pulse-dot { animation: pulse-dot 2.2s ease-in-out infinite; }
+
+/* ---------- little helpers ---------- */
+.clip-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+.btn-press { transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s; }
+.btn-press:active { transform: translateY(1px) scale(0.985); }
+.focus-ring:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
